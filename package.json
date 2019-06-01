@@ -13,6 +13,7 @@
     "react-native": "0.59.8",
     "react-native-firebase": "^5.4.2",
     "react-native-gesture-handler": "^1.2.1",
+    "react-native-google-signin": "^2.0.0",
     "react-native-svg": "^9.4.0",
     "react-native-svg-uri": "^1.2.3",
     "react-navigation": "^3.11.0",
