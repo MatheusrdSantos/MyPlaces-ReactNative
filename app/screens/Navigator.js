@@ -1,6 +1,7 @@
 import {createSwitchNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
 import SignInScreen from './SignInScreen';
 import HomeScreen from './HomeScreen';
+import LoginScreen from './LoginScreen';
 
 const AppStack = createStackNavigator(
     {
@@ -9,15 +10,16 @@ const AppStack = createStackNavigator(
 );
 const AuthStack = createStackNavigator(
     {
-        SignIn: SignInScreen
+        login: LoginScreen
     }
 );
 
 const switchNav = createSwitchNavigator({
         app: AppStack,
-        auth: AuthStack
+        auth: AuthStack,
+        signIn: SignInScreen
     },{
-        initialRouteName: 'auth'
+        initialRouteName: 'signIn'
     }
 );
 
