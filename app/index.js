@@ -27,23 +27,7 @@ YellowBox.ignoreWarnings(['Require cycle:']);
 }); */
 const db = firebase.firestore()
 
-export default class App extends Component{
-  constructor(){
-    super()
-    this.state = {name: "no name"}
-    /* const userRef = db.collection('users').doc('m-1') 
-    userRef.onSnapshot(docSnapshot=> {
-        if(docSnapshot.exists){
-          this.setState({name:docSnapshot.data().name})
-        }
-        console.log(docSnapshot.data().name)
-      }, err => {
-        alert("Permission denied")
-        console.log(err)
-      }
-    ) */
-  }
-
+class App extends Component{
   loading = ()=>{
     return (
       <View style={styles.leadingContainer}>
@@ -58,9 +42,6 @@ export default class App extends Component{
         <PersistGate persistor={persistor} loading={this.loading()}>
           <Navigator></Navigator>
         </PersistGate>
-        {/* <View style={styles.container}>
-          <Text style={styles.welcome}>{this.state.name}</Text>
-        </View> */}
       </Provider>
     );
   }
@@ -89,3 +70,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
+
+export default App;

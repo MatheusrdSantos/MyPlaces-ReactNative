@@ -2,16 +2,9 @@ import React, {Component} from 'react';
 import {View, Text, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {login} from '../actions';
-import firebase from 'react-native-firebase';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import AppLoading from '../components/AppLoading';
 class SignInScreen extends Component{
-    constructor(){
-        super()
-        this.state = {
-            userInfo: null
-        }
-    }
 
     componentDidMount(){
         setTimeout(() => this.getCurrentUser(),
@@ -20,15 +13,15 @@ class SignInScreen extends Component{
         //this.checkAuthStatus()
     }
 
-    checkAuthStatus = () =>{
+    /* checkAuthStatus = () =>{
         if(this.props.auth.logged){
             this.props.navigation.navigate('app')
         }
-    }
+    } */
 
     getCurrentUser = async () => {
         const currentUser = await GoogleSignin.getCurrentUser();
-        console.log("curr_user:", currentUser)
+        //console.log("curr_user:", currentUser)
         //se o user existir chama a home
         // se não chama login
         if(currentUser){
