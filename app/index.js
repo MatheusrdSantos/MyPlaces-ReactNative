@@ -14,6 +14,7 @@ import {Spinner} from 'native-base'
 import {store, persistor} from './reducers';
 import {PersistGate} from 'redux-persist/integration/react'
 import Navigator from './screens/Navigator';
+import AppLoading from './components/AppLoading';
 
 YellowBox.ignoreWarnings(['Require cycle:']);
 
@@ -46,8 +47,7 @@ export default class App extends Component{
   loading = ()=>{
     return (
       <View style={styles.leadingContainer}>
-        <Spinner color='red'></Spinner>
-        <Text>Loading</Text>
+        <AppLoading></AppLoading>
       </View>
     );
   }
@@ -55,7 +55,7 @@ export default class App extends Component{
   render() {
     return (
       <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate persistor={persistor} loading={this.loading()}>
           <Navigator></Navigator>
         </PersistGate>
         {/* <View style={styles.container}>

@@ -15,7 +15,7 @@ class SignInScreen extends Component{
 
     componentDidMount(){
         setTimeout(() => this.getCurrentUser(),
-            2000
+            1000
         )
         //this.checkAuthStatus()
     }

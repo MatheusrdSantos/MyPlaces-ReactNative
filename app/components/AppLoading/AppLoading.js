@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator, Image} from 'react-native';
 class AppLoading extends Component{
     render(){
+        {/* <ActivityIndicator size="large" color="#0000ff" /> */}
         return (
-            <ActivityIndicator size="large" color="#0000ff" />
+            <Image style={{width:85, height:85, alignSelf:"center"}} source={require('./images/app-icon.png')} />
         );
     }
 }
