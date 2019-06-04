@@ -33,7 +33,7 @@ class SignInScreen extends Component{
     render(){
         return (
             <View style={{flex:1, textAlign: 'center', justifyContent:'center'}}>
-                <AppLoading></AppLoading>
+                {/* <AppLoading></AppLoading> */}
             </View>
         )
     }
