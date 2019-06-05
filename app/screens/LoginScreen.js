@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import {login} from '../actions';
 import firebase from 'react-native-firebase';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
+import {appColors} from '../resources/colors';
 class LoginScreen extends Component{
+    static navigationOptions = {
+        header: null
+    };
+
     constructor(){
         super()
         this.state = {
@@ -21,29 +26,6 @@ class LoginScreen extends Component{
             this.props.navigation.navigate('app')
         }
     } */
-    signIn = async () => {
-        try {
-            GoogleSignin.configure();
-            await GoogleSignin.hasPlayServices();
-            const userInfo = await GoogleSignin.signIn();
-            this.setState({ userInfo });
-            console.log(userInfo)
-        } catch (error) {
-            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            // user cancelled the login flow
-                console.log(error)
-            } else if (error.code === statusCodes.IN_PROGRESS) {
-                // operation (f.e. sign in) is in progress already
-                console.log(error)
-            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-                // play services not available or outdated
-                console.log(error)
-            } else {
-                // some other error happened
-                console.log(error)
-            }
-        }
-    };
 
     // Calling this function will open Google for login.
     signInGoogleFirebase =  async () => {
@@ -64,24 +46,42 @@ class LoginScreen extends Component{
             //console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()));
             this.props.doLogin()
             this.props.navigation.navigate('app')
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            // user cancelled the login flow
+                console.log(error)
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+                // operation (f.e. sign in) is in progress already
+                console.log(error)
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                // play services not available or outdated
+                console.log(error)
+            } else {
+                // some other error happened
+                console.log(error)
+            }
         }
     }
     render(){
         return (
-            <View style={{flex:1, textAlign: 'center', justifyContent:'center'}}>
-                <Text style={{alignSelf:'center', fontSize: 20}}>SignIn</Text>
+            <View style={{flex:1, textAlign: 'center', justifyContent:'center', backgroundColor: appColors.secondary}}>
+                <Text style={{alignSelf:'center', fontSize: 20, color: 'white'}}>SignIn</Text>
+                <TextInput style={{color:'white', marginBottom:20, marginLeft: 20, marginRight:20, fontSize:15}} underlineColorAndroid='black' placeholder="Usuário"></TextInput>
+                <TextInput style={{color:'white', marginBottom:20, marginLeft: 20, marginRight:20, fontSize:15}} underlineColorAndroid='black' placeholder="Senha"></TextInput>
+                <Button onPress={() =>{
+                    alert('Ainda não disponível')
+                }} title="Login" color={appColors.primary}></Button>
+                <View style={{marginBottom:20}}></View>
                 <Button onPress={() =>{
                     this.signInGoogleFirebase()
-                }} title="Login"></Button>
-                <GoogleSigninButton
+                }} title="Login with Google" color={appColors.primary}></Button>
+                {/* <GoogleSigninButton
                 style={{ width: 192, height: 48 }}
-                size={GoogleSigninButton.Size.Wide}
+                size={GoogleSigninButton.Size.Standard}
                 color={GoogleSigninButton.Color.Dark}
                 onPress={() => this.signIn()}
-                /* disabled={this.state.isSigninInProgress} */
-                disabled={false} />
+                disabled={this.state.isSigninInProgress}
+                disabled={false} /> */}
             </View>
         )
     }

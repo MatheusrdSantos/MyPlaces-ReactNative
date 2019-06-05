@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import {login} from '../actions';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import AppLoading from '../components/AppLoading';
-class SignInScreen extends Component{
 
+class SignInScreen extends Component{
     componentDidMount(){
         setTimeout(() => this.getCurrentUser(),
             1000
