@@ -7,11 +7,26 @@ import RestaurantsScreen from './RestaurantsScreen';
 import OthersScreen from './OthersScreen';
 import {appColors} from '../resources/colors';
 const PlacesTabNav = createMaterialTopTabNavigator({
-    SuperMarket: SuperMarketsScreen,
-    Restaurants: RestaurantsScreen,
-    Others: OthersScreen
+    SuperMarket: {
+        screen: SuperMarketsScreen,
+        navigationOptions:{
+            title: 'Supermercados'
+        }
+    },
+    Restaurants: {
+        screen: RestaurantsScreen,
+        navigationOptions:{
+            title: 'Restaurantes'
+        }
+    },
+    Others: {
+        screen: OthersScreen,
+        navigationOptions:{
+            title: 'Outros'
+        }
+    }
 },{
-    initialRouteName: 'SuperMarket',
+    initialRouteName: 'Others',
     tabBarOptions: {
         labelStyle: {
             fontSize: 12,
@@ -22,6 +37,11 @@ const PlacesTabNav = createMaterialTopTabNavigator({
         activeTintColor: 'white',
         indicatorStyle:{
             backgroundColor: 'white'
+        },
+        paths:{
+            SuperMarket: 'test',
+            Restaurants: 'aa',
+            Others:'aaa'
         }
     },
     navigationOptions:{
@@ -33,7 +53,7 @@ const PlacesTabNav = createMaterialTopTabNavigator({
         headerTitleStyle: {
         fontWeight: 'bold',
         },
-    }
+    },
 });
 
 const AppStack = createStackNavigator(
