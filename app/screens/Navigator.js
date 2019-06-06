@@ -1,13 +1,45 @@
-import {createSwitchNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
+import {createSwitchNavigator, createStackNavigator, createAppContainer, createMaterialTopTabNavigator} from 'react-navigation';
 import SignInScreen from './SignInScreen';
 import HomeScreen from './HomeScreen';
 import LoginScreen from './LoginScreen';
-import PlacesScreen from './PlacesScreen';
+import SuperMarketsScreen from './SuperMarketsScreen';
+import RestaurantsScreen from './RestaurantsScreen';
+import OthersScreen from './OthersScreen';
+import {appColors} from '../resources/colors';
+const PlacesTabNav = createMaterialTopTabNavigator({
+    SuperMarket: SuperMarketsScreen,
+    Restaurants: RestaurantsScreen,
+    Others: OthersScreen
+},{
+    initialRouteName: 'SuperMarket',
+    tabBarOptions: {
+        labelStyle: {
+            fontSize: 12,
+        },
+        style: {
+            backgroundColor: appColors.secondary,
+        },
+        activeTintColor: 'white',
+        indicatorStyle:{
+            backgroundColor: 'white'
+        }
+    },
+    navigationOptions:{
+        title: 'Categorias',
+        headerStyle: {
+        backgroundColor: appColors.secondary,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+        fontWeight: 'bold',
+        },
+    }
+});
 
 const AppStack = createStackNavigator(
     {
         Home: HomeScreen,
-        Places: PlacesScreen
+        Places: PlacesTabNav
     },{
         initialRouteName: 'Home'
     }
