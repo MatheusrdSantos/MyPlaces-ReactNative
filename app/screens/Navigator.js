@@ -2,11 +2,16 @@ import {createSwitchNavigator, createStackNavigator, createAppContainer} from 'r
 import SignInScreen from './SignInScreen';
 import HomeScreen from './HomeScreen';
 import LoginScreen from './LoginScreen';
+import PlacesScreen from './PlacesScreen';
 
 const AppStack = createStackNavigator(
     {
-        Home: HomeScreen
+        Home: HomeScreen,
+        Places: PlacesScreen
+    },{
+        initialRouteName: 'Home'
     }
+
 );
 const AuthStack = createStackNavigator(
     {
