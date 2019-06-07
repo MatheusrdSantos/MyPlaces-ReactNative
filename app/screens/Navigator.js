@@ -10,7 +10,7 @@ const PlacesTabNav = createMaterialTopTabNavigator({
     SuperMarket: {
         screen: SuperMarketsScreen,
         navigationOptions:{
-            title: 'Supermercados'
+            title: 'Mercados'
         }
     },
     Restaurants: {
@@ -37,11 +37,6 @@ const PlacesTabNav = createMaterialTopTabNavigator({
         activeTintColor: 'white',
         indicatorStyle:{
             backgroundColor: 'white'
-        },
-        paths:{
-            SuperMarket: 'test',
-            Restaurants: 'aa',
-            Others:'aaa'
         }
     },
     navigationOptions:{
