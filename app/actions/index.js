@@ -43,6 +43,7 @@ export const INITIAL_STATE = {
             id: 10 */
         }
     },
-    app: [
-    ]
+    app: {
+        places: []
+    }
 }

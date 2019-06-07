@@ -5,15 +5,12 @@ import styles from './styles';
 import PlaceCard from '../PlaceCard';
 import {requestPlaces} from '../../actions';
 class ListOthers extends Component {
-  /* componentDidMount(){
+  componentDidMount(){
     this.props.loadPlaces()
-  } */
+  }
   render() {
     return (
         <View style={styles.container}>
-			<Button onPress={() => {
-				this.props.loadPlaces()
-			}} title="load"></Button>
             <FlatList data={this.props.places}
             /* ItemSeparatorComponent={() => <View style={{ margin: 10 }} />} */
             /* istFooterComponent={ <Text>Footer</Text> } */
@@ -27,7 +24,7 @@ class ListOthers extends Component {
 
 const mapStateToProps = state => {
 	return {
-		places: state.app
+		places: state.app.places
 	}
 };
 

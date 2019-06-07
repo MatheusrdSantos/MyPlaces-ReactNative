@@ -16,10 +16,13 @@ const authPersistConfig = {
     key: 'auth',
     storage: AsyncStorage,
 }
+const appReducer = combineReducers({
+    places: placesReducer
+})
 
 const rootReducer = combineReducers({
     auth: persistReducer(authPersistConfig, authReducer),
-    app: placesReducer
+    app: appReducer
 })
 //const localPersistReducer = persistReducer(rootReducer)
 
