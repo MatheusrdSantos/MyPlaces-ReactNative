@@ -61,8 +61,10 @@ class HomeScreen extends Component{
                     </View>
                 </TouchableNativeFeedback>
                 
-                <TouchableNativeFeedback onPress={() =>{
-                    //this.props.navigation.navigate('Places')
+                <TouchableNativeFeedback onPress={() => {
+                    this.signOut()
+                    this.props.doLogout()
+                    this.props.navigation.navigate('auth')
                 }} style={styles.touchable}>
                     <View style={[styles.bottomShadow, {backgroundColor: menuColors.gadient[3], elevation: 1}, styles.menuItemContainer]}>
                         <Icon type="MaterialCommunityIcons" name="history" style={styles.mainIcon}/>

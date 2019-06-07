@@ -1,33 +1,43 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList} from 'react-native';
+import { View, Text, FlatList, Button} from 'react-native';
 import { connect } from 'react-redux';
 import styles from './styles';
 import PlaceCard from '../PlaceCard';
+import {requestPlaces} from '../../actions';
 class ListOthers extends Component {
+  /* componentDidMount(){
+    this.props.loadPlaces()
+  } */
   render() {
     return (
         <View style={styles.container}>
-            <FlatList data={[
-                {name:"Oficina - Lagoa Nova", id:2},
-                {name:"Barbearia do João", id:1},
-                {name:"Sindicato têxtil", id:3},
-            ]}
+			<Button onPress={() => {
+				this.props.loadPlaces()
+			}} title="load"></Button>
+            <FlatList data={this.props.places}
             /* ItemSeparatorComponent={() => <View style={{ margin: 10 }} />} */
-            L/* istFooterComponent={ <Text>Footer</Text> } */
+            /* istFooterComponent={ <Text>Footer</Text> } */
             renderItem={({item})=><PlaceCard place={item}></PlaceCard>}
-            keyExtractor={(item)=>item.id.toString()}
+            keyExtractor={(item)=>item.id}
             ></FlatList>
         </View>
     );
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => {
+	return {
+		places: state.app
+	}
+};
 
-// const mapDispatchToProps = dispatch =>
-//   bindActionCreators(Actions, dispatch);
+const mapDispatchToProps = dispatch => {
+	return {
+		loadPlaces: () => dispatch(requestPlaces())
+	}
+}
 
 export default connect(
   mapStateToProps,
-  // mapDispatchToProps
+  mapDispatchToProps
 )(ListOthers);

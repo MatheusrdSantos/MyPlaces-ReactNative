@@ -4,12 +4,13 @@ import {persistStore, persistReducer} from 'redux-persist';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 import authReducer from './auth';
+import placesReducer from './places';
 
-const rootPersistConfig = {
+/* const rootPersistConfig = {
     key: 'root',
     storage: AsyncStorage,
     blacklist: ['auth']
-}
+} */
 
 const authPersistConfig = {
     key: 'auth',
@@ -18,10 +19,10 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
     auth: persistReducer(authPersistConfig, authReducer),
-    app: "app data"
+    app: placesReducer
 })
-const localPersistReducer = persistReducer(rootPersistConfig, rootReducer)
+//const localPersistReducer = persistReducer(rootReducer)
 
-export const store = createStore(localPersistReducer, applyMiddleware(thunk, logger))
+export const store = createStore(rootReducer, applyMiddleware(thunk, logger))
 
 export const persistor = persistStore(store)
