@@ -15,8 +15,8 @@ class PlaceCard extends Component {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>{this.props.place.name}</Text>
-                        <Text style={styles.text}>{this.props.place.name}</Text>
-                        <Text style={styles.text}>{this.props.place.name}</Text>
+                        <Text style={styles.text}>{this.props.place.description}</Text>
+                        <Text style={styles.text}>{this.props.place.rating}</Text>
                     </View>
                 </View>
             </TouchableNativeFeedback>

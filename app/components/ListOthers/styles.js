@@ -7,5 +7,10 @@ export default StyleSheet.create({
     },  
     container:{
         marginTop:10
+    },
+    loadingContainer:{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
