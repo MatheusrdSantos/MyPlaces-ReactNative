@@ -14,6 +14,12 @@ const placesReducer = (state = INITIAL_STATE.app.places, action) =>{
             return {...state, restaurants:{...state.others, fetchingState: 'fetching'}};
         case PLACES_ACTIONS.SET_FETCHING_ERROR_RESTAURANTS:
             return {...state, restaurants:{...state.others, fetchingState: 'error'}};
+        case PLACES_ACTIONS.FETCH_MARKETS_PLACES:
+            return {...state, markets:{fetchingState: 'success', data: action.payload}};
+        case PLACES_ACTIONS.SET_IS_FETCHING_MARKETS:
+            return {...state, markets:{...state.others, fetchingState: 'fetching'}};
+        case PLACES_ACTIONS.SET_FETCHING_ERROR_MARKETS:
+            return {...state, markets:{...state.others, fetchingState: 'error'}};
         default:
             return state;
     }

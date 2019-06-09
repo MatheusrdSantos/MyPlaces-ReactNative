@@ -8,12 +8,12 @@ export const AUTH_ACTIONS = {
 
 export const PLACES_ACTIONS = {
     FETCH_OTHER_PLACES: 'FETCH_OTHER_PLACES',
-    FETCH_MARKETS_PLACES: 'FETCH_MARKETS_PLACES',
-    FETCH_RESTAURANTS_PLACES: 'FETCH_RESTAURANTS_PLACES',
     SET_IS_FETCHING_OTHERS: 'SET_IS_FETCHING_OTHERS',
     SET_FETCHING_ERROR_OTHERS: 'SET_FETCHING_ERROR_OTHERS',
+    FETCH_MARKETS_PLACES: 'FETCH_MARKETS_PLACES',
     SET_IS_FETCHING_MARKETS: 'SET_IS_FETCHING_MARKETS',
     SET_FETCHING_ERROR_MARKETS: 'SET_FETCHING_ERROR_MARKETS',
+    FETCH_RESTAURANTS_PLACES: 'FETCH_RESTAURANTS_PLACES',
     SET_IS_FETCHING_RESTAURANTS: 'SET_IS_FETCHING_RESTAURANTS',
     SET_FETCHING_ERROR_RESTAURANTS: 'SET_FETCHING_ERROR_RESTAURANTS'
 }
@@ -54,12 +54,26 @@ export const setFetchingRestaurantsError = () => {
     return {type: PLACES_ACTIONS.SET_FETCHING_ERROR_RESTAURANTS, payload:null}
 }
 
+export const fetchMarketPlaces = (data) =>{
+    return {type: PLACES_ACTIONS.FETCH_MARKETS_PLACES, payload:data}
+}
+
+export const setIsFetchingMarkets = () => {
+    return {type: PLACES_ACTIONS.SET_IS_FETCHING_MARKETS, payload:null}
+}
+
+export const setFetchingMarketsError = () => {
+    return {type: PLACES_ACTIONS.SET_FETCHING_ERROR_MARKETS, payload:null}
+}
+
 export const requestPlaces = (category = null) => {
     return (dispatch) => {
         if(category == PLACES_CATEGORIES.others){
             dispatch(setIsFetchingOthers())
         }else if(category == PLACES_CATEGORIES.restaurants){
             dispatch(setIsFetchingRestaurants())
+        }else if(category == PLACES_CATEGORIES.markets){
+            dispatch(setIsFetchingMarkets())
         }
         let ref = firebase.firestore().collection('places');
         return ref.where('category', '==', category).get()
@@ -73,6 +87,8 @@ export const requestPlaces = (category = null) => {
                 dispatch(fetchOtherPlaces(places))
             }else if(category == PLACES_CATEGORIES.restaurants){
                 dispatch(fetchRestaurantPlaces(places))
+            }else if(category == PLACES_CATEGORIES.markets){
+                dispatch(fetchMarketPlaces(places))
             }
         })
         .catch(err => {
@@ -81,6 +97,8 @@ export const requestPlaces = (category = null) => {
                 dispatch(setFetchingOthersError())
             }else if(category == PLACES_CATEGORIES.restaurants){
                 dispatch(setFetchingRestaurantsError())
+            }else if(category == PLACES_CATEGORIES.markets){
+                dispatch(setFetchingMarketsError())
             }
         });
     }

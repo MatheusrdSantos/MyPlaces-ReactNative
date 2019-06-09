@@ -9,36 +9,36 @@ import {appColors} from '../../resources/colors';
 
 class ListRestaurants extends Component {
     componentDidMount(){
-        this.props.loadPlaces('restaurants')
+        this.props.loadPlaces('restaurants');
     }
     render() {
-    if(this.props.fetchingState == 'fetching'){
-        return (
-        <View style={styles.loadingContainer}>
-            <Text>Buscando estabelecimentos</Text>
-            <Spinner color={appColors.secondary} />
-        </View>
-        )
-    }else if(this.props.fetchingState == 'success'){
-        return (
-            <View style={styles.container}>
-                <FlatList data={this.props.places}
-                /* ItemSeparatorComponent={() => <View style={{ margin: 10 }} />} */
-                /* istFooterComponent={ <Text>Footer</Text> } */
-                renderItem={({item})=><PlaceCard place={item}></PlaceCard>}
-                keyExtractor={(item)=>item.id}
-                ></FlatList>
-            </View>
-        );
-    }else if(this.props.fetchingState == 'error'){
-        return (
+        if(this.props.fetchingState == 'fetching'){
+            return (
             <View style={styles.loadingContainer}>
-                <Text>Ocorreu algum erro, verifique sua conexão com a internet</Text>
+                <Text>Buscando estabelecimentos</Text>
+                <Spinner color={appColors.secondary} />
             </View>
-        );
-    }else{
-        return (<View></View>)
-    }
+            )
+        }else if(this.props.fetchingState == 'success'){
+            return (
+                <View style={styles.container}>
+                    <FlatList data={this.props.places}
+                    /* ItemSeparatorComponent={() => <View style={{ margin: 10 }} />} */
+                    /* istFooterComponent={ <Text>Footer</Text> } */
+                    renderItem={({item})=><PlaceCard place={item}></PlaceCard>}
+                    keyExtractor={(item)=>item.id}
+                    ></FlatList>
+                </View>
+            );
+        }else if(this.props.fetchingState == 'error'){
+            return (
+                <View style={styles.loadingContainer}>
+                    <Text>Ocorreu algum erro, verifique sua conexão com a internet</Text>
+                </View>
+            );
+        }else{
+            return (<View></View>)
+        }
     }
 }
 
