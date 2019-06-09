@@ -10,6 +10,29 @@ export default StyleSheet.create({
     text:{
         marginLeft: 15
     },  
+    textRating:{
+        marginLeft: 15,
+        fontSize:12,
+        color: '#FFBF53',
+        fontWeight: 'bold'
+    },
+    ratingIcon:{
+        fontSize: 10,
+        color:"#FFBF53"
+    },
+    textDescription:{
+        marginLeft: 15,
+        fontSize:13
+    },  
+    textAddress:{
+        marginLeft: 15,
+        fontSize:13
+    },  
+    textName:{
+        marginLeft: 15,
+        fontWeight: '600',
+        fontSize: 15
+    },  
     cardContainer:{
         flex:1,
         flexDirection:'row',

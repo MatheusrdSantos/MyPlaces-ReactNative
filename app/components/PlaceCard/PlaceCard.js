@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableNativeFeedback, Text} from 'react-native';
-import {Card, Thumbnail} from 'native-base';
+import {Card, Thumbnail, Icon} from 'native-base';
 import { connect } from 'react-redux';
 import styles from './styles';
 const uri = "https://facebook.github.io/react-native/docs/assets/favicon.png";
@@ -14,9 +14,10 @@ class PlaceCard extends Component {
                         <Thumbnail small source={{uri: uri}} style={styles.icon}/>
                     </View>
                     <View style={styles.textContainer}>
-                        <Text style={styles.text}>{this.props.place.name}</Text>
-                        <Text style={styles.text}>{this.props.place.description}</Text>
-                        <Text style={styles.text}>{this.props.place.rating}</Text>
+                        <Text style={styles.textName}>{this.props.place.name}</Text>
+                        <Text style={styles.textDescription}>{this.props.place.description}</Text>
+                        <Text style={styles.textDescription}>{this.props.place.address}</Text>
+                        <Text style={styles.textRating}><Icon type="FontAwesome" name="star" style={styles.ratingIcon}></Icon>{this.props.place.rating}</Text>
                     </View>
                 </View>
             </TouchableNativeFeedback>
