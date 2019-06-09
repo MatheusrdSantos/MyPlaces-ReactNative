@@ -8,7 +8,7 @@ import {requestPlaces} from '../../actions';
 import {appColors} from '../../resources/colors';
 class ListOthers extends Component {
   componentDidMount(){
-    this.props.loadPlaces()
+    this.props.loadPlaces('others')
   }
   render() {
     if(this.props.fetchingState == 'fetching'){
@@ -43,14 +43,14 @@ class ListOthers extends Component {
 
 const mapStateToProps = state => {
 	return {
-    places: state.app.places.data,
-    fetchingState: state.app.places.fetchingState
+    places: state.app.places.others.data,
+    fetchingState: state.app.places.others.fetchingState
 	}
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		loadPlaces: () => dispatch(requestPlaces())
+		loadPlaces: (category) => dispatch(requestPlaces(category))
 	}
 }
 

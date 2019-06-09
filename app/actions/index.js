@@ -8,10 +8,21 @@ export const AUTH_ACTIONS = {
 
 export const PLACES_ACTIONS = {
     FETCH_OTHER_PLACES: 'FETCH_OTHER_PLACES',
-    SET_IS_FETCHING: 'SET_IS_FETCHING',
-    SET_FETCHING_ERROR: 'SET_FETCHING_ERROR'
+    FETCH_MARKETS_PLACES: 'FETCH_MARKETS_PLACES',
+    FETCH_RESTAURANTS_PLACES: 'FETCH_RESTAURANTS_PLACES',
+    SET_IS_FETCHING_OTHERS: 'SET_IS_FETCHING_OTHERS',
+    SET_FETCHING_ERROR_OTHERS: 'SET_FETCHING_ERROR_OTHERS',
+    SET_IS_FETCHING_MARKETS: 'SET_IS_FETCHING_MARKETS',
+    SET_FETCHING_ERROR_MARKETS: 'SET_FETCHING_ERROR_MARKETS',
+    SET_IS_FETCHING_RESTAURANTS: 'SET_IS_FETCHING_RESTAURANTS',
+    SET_FETCHING_ERROR_RESTAURANTS: 'SET_FETCHING_ERROR_RESTAURANTS'
 }
+const PLACES_CATEGORIES = {
+    others: 'others',
+    markets: 'markets',
+    restaurants: 'restaurants',
 
+}
 export const login = () =>{
     return {type: AUTH_ACTIONS.LOGIN, payload: true}
 }
@@ -23,30 +34,54 @@ export const fetchOtherPlaces = (data) =>{
     return {type: PLACES_ACTIONS.FETCH_OTHER_PLACES, payload:data}
 }
 
-export const setIsFetching = () => {
-    return {type: PLACES_ACTIONS.SET_IS_FETCHING, payload:null}
+export const setIsFetchingOthers = () => {
+    return {type: PLACES_ACTIONS.SET_IS_FETCHING_OTHERS, payload:null}
 }
 
-export const setFetchingError = () => {
-    return {type: PLACES_ACTIONS.SET_FETCHING_ERROR, payload:null}
+export const setFetchingOthersError = () => {
+    return {type: PLACES_ACTIONS.SET_FETCHING_ERROR_OTHERS, payload:null}
 }
 
-export const requestPlaces = () => {
+export const fetchRestaurantPlaces = (data) =>{
+    return {type: PLACES_ACTIONS.FETCH_RESTAURANTS_PLACES, payload:data}
+}
+
+export const setIsFetchingRestaurants = () => {
+    return {type: PLACES_ACTIONS.SET_IS_FETCHING_RESTAURANTS, payload:null}
+}
+
+export const setFetchingRestaurantsError = () => {
+    return {type: PLACES_ACTIONS.SET_FETCHING_ERROR_RESTAURANTS, payload:null}
+}
+
+export const requestPlaces = (category = null) => {
     return (dispatch) => {
-        dispatch(setIsFetching())
+        if(category == PLACES_CATEGORIES.others){
+            dispatch(setIsFetchingOthers())
+        }else if(category == PLACES_CATEGORIES.restaurants){
+            dispatch(setIsFetchingRestaurants())
+        }
         let ref = firebase.firestore().collection('places');
-        return ref.where('category', '==', 'others').get()
+        return ref.where('category', '==', category).get()
         .then(snapshot => {
             let places = []
             snapshot.forEach(doc => {
                 places.push({id:doc.id, ...doc.data()})
                 console.log(doc.data())
             });
-            dispatch(fetchOtherPlaces(places))
+            if(category == PLACES_CATEGORIES.others){
+                dispatch(fetchOtherPlaces(places))
+            }else if(category == PLACES_CATEGORIES.restaurants){
+                dispatch(fetchRestaurantPlaces(places))
+            }
         })
         .catch(err => {
             console.log(err)
-            dispatch(setFetchingError())
+            if(category == PLACES_CATEGORIES.others){
+                dispatch(setFetchingOthersError())
+            }else if(category == PLACES_CATEGORIES.restaurants){
+                dispatch(setFetchingRestaurantsError())
+            }
         });
     }
 }
@@ -62,8 +97,18 @@ export const INITIAL_STATE = {
     },
     app: {
         places: {
-            data:[],
-            fetchingState: null
+            others:{
+                data:[],
+                fetchingState: null
+            },
+            restaurants:{
+                data:[],
+                fetchingState: null
+            },
+            markets:{
+                data:[],
+                fetchingState: null
+            }
         }
     }
 }
