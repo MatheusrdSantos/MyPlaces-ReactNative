@@ -2,10 +2,13 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import ListOthers from '../components/ListOthers';
 class OthersScreen extends Component{
+    itemDetails(data){
+        this.props.navigation.navigate('OtherPlace', {place: data});
+    }
     render(){
         return (
             <View style={{flex:1}}>
-                <ListOthers></ListOthers>
+                <ListOthers itemDetails={(data)=>this.itemDetails(data)}></ListOthers>
             </View>
         );
     }

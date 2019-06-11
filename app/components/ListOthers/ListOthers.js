@@ -24,7 +24,7 @@ class ListOthers extends Component {
               <FlatList data={this.props.places}
               /* ItemSeparatorComponent={() => <View style={{ margin: 10 }} />} */
               /* istFooterComponent={ <Text>Footer</Text> } */
-              renderItem={({item})=><PlaceCard place={item}></PlaceCard>}
+              renderItem={({item})=><PlaceCard place={item} itemDetails={(data) => this.props.itemDetails(data)}></PlaceCard>}
               keyExtractor={(item)=>item.id}
               ></FlatList>
           </View>

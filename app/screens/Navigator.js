@@ -5,6 +5,7 @@ import LoginScreen from './LoginScreen';
 import SuperMarketsScreen from './SuperMarketsScreen';
 import RestaurantsScreen from './RestaurantsScreen';
 import OthersScreen from './OthersScreen';
+import OtherPlaceScreen from './OtherPlaceScreen';
 import {appColors} from '../resources/colors';
 const PlacesTabNav = createMaterialTopTabNavigator({
     SuperMarket: {
@@ -54,7 +55,8 @@ const PlacesTabNav = createMaterialTopTabNavigator({
 const AppStack = createStackNavigator(
     {
         Home: HomeScreen,
-        Places: PlacesTabNav
+        Places: PlacesTabNav,
+        OtherPlace: OtherPlaceScreen
     },{
         initialRouteName: 'Home'
     }
