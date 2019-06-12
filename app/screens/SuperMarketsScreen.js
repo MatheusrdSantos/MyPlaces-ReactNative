@@ -4,7 +4,7 @@ import ListMarkets from '../components/ListMarkets';
 class SuperMarketsScreen extends Component{
     render(){
         return (
-            <View>
+            <View style={{flex:1}}>
                 <ListMarkets></ListMarkets>
             </View>
         );
