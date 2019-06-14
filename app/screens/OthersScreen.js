@@ -3,7 +3,8 @@ import {View, Text} from 'react-native';
 import ListOthers from '../components/ListOthers';
 class OthersScreen extends Component{
     itemDetails(data){
-        this.props.navigation.navigate('OtherPlace', {place: data});
+        //this.props.navigation.navigate('OtherPlace', {place: data});
+        this.props.navigation.navigate('Place', {place: data});
     }
     render(){
         return (

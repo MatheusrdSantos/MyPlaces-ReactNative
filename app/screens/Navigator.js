@@ -6,7 +6,9 @@ import SuperMarketsScreen from './SuperMarketsScreen';
 import RestaurantsScreen from './RestaurantsScreen';
 import OthersScreen from './OthersScreen';
 import OtherPlaceScreen from './OtherPlaceScreen';
+import PlaceScreen from './PlaceScreen';
 import {appColors} from '../resources/colors';
+
 const PlacesTabNav = createMaterialTopTabNavigator({
     SuperMarket: {
         screen: SuperMarketsScreen,
@@ -56,7 +58,8 @@ const AppStack = createStackNavigator(
     {
         Home: HomeScreen,
         Places: PlacesTabNav,
-        OtherPlace: OtherPlaceScreen
+        OtherPlace: OtherPlaceScreen,
+        Place: PlaceScreen
     },{
         initialRouteName: 'Home'
     }
@@ -71,11 +74,14 @@ const AuthStack = createStackNavigator(
 const switchNav = createSwitchNavigator({
         app: AppStack,
         auth: AuthStack,
-        signIn: SignInScreen
+        signIn: SignInScreen,
     },{
         initialRouteName: 'signIn'
     }
 );
 
-
-export default createAppContainer(switchNav)
+const test = createStackNavigator({
+    test: PlaceScreen
+});
+/* export default createAppContainer(switchNav) */
+export default createAppContainer(test)

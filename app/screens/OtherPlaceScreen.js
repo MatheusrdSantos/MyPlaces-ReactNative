@@ -10,8 +10,7 @@ class OtherPlaceScreen extends Component{
         return {
             title: navigation.getParam('place').name,
             headerStyle: {
-                backgroundColor: appColors.secondary,
-                height: 110
+                backgroundColor: appColors.secondary
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
