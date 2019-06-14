@@ -4,7 +4,7 @@ import ListOthers from '../components/ListOthers';
 class OthersScreen extends Component{
     itemDetails(data){
         //this.props.navigation.navigate('OtherPlace', {place: data});
-        this.props.navigation.navigate('Place', {place: data});
+        this.props.navigation.navigate('OtherPlace', {place: data});
     }
     render(){
         return (

@@ -66,60 +66,45 @@ class PlaceScreen extends Component {
                     </View>
                 </Animated.ScrollView>
                 <Animated.View style={{
-                    height: 175,
+                    height: 175+28,
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    backgroundColor: appColors.primary,
                     top: 0,
                     right: 0,
                     transform: [{ translateY: headerOffset }],
                     zIndex: 20
                 }}>
-                    <Text style={{
-                        color: "#fff",
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        paddingHorizontal: 40,
-                        position: 'absolute',
-                        fontSize: 20,
-                    }}>Title</Text>
-                    {/* <ActionButton 
+                    <View style={{
+                        backgroundColor: appColors.primary,
+                        flex:1,
+                        marginBottom: 28
+                    }}>
+
+                        <Text style={{
+                            color: "#fff",
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            paddingHorizontal: 40,
+                            position: 'absolute',
+                            fontSize: 20,
+                        }}>Title</Text>
+                    </View>
+                    <ActionButton 
                         buttonColor={appColors.secondary} 
                         hideShadow={false} 
                         style={{
                             elevation:3, 
-                            bottom: -56,
+                            bottom: 0,
                             position: 'absolute',
                             zIndex:9999
-                        }} 
+                        }}
+                        offsetX={30}
+                        offsetY={0}
                         fixNativeFeedbackRadius={true}>
                         <Icon type="MaterialIcons" name="add" style={{fontSize: 20,height: 22,color: 'white',}} />
-                    </ActionButton> */}
-                    <TouchableNativeFeedback 
-                        onPress={()=>{
-                            alert('a')
-                        }}>
-                        <View
-                        style={{
-                            elevation:3,
-                            bottom: -56,
-                            right:0,
-                            position: 'absolute',
-                            height: 56,
-                            width: 56,
-                            backgroundColor: appColors.secondary,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 28,
-                            marginHorizontal: 20,
-                        }}
-
-                        >
-                            <Icon type="MaterialIcons" name="add" style={{fontSize: 20,height: 22,color: 'white',}} />
-                        </View>
-                    </TouchableNativeFeedback>
+                    </ActionButton>
                 </Animated.View>
             </View>
         );

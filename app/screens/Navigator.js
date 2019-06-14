@@ -59,7 +59,7 @@ const AppStack = createStackNavigator(
         Home: HomeScreen,
         Places: PlacesTabNav,
         OtherPlace: OtherPlaceScreen,
-        Place: PlaceScreen
+        //Place: PlaceScreen
     },{
         initialRouteName: 'Home'
     }
@@ -80,8 +80,8 @@ const switchNav = createSwitchNavigator({
     }
 );
 
-const test = createStackNavigator({
+/* const test = createStackNavigator({
     test: PlaceScreen
-});
-/* export default createAppContainer(switchNav) */
-export default createAppContainer(test)
+}); */
+export default createAppContainer(switchNav)
+//export default createAppContainer(test)
