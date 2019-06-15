@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Animated, easing, TouchableNativeFeedback} from 'react-native';
+import { View, Text, Animated, TouchableNativeFeedback, StyleSheet} from 'react-native';
 import {appColors} from '../resources/colors';
 import ActionButton from 'react-native-action-button';
 import {Icon} from 'native-base';
 import ScheduleCard from '../components/ScheduleCard';
+import firebase from 'react-native-firebase';
 const AnimatedActionButton =  Animated.createAnimatedComponent(ActionButton);
 class OtherPlaceScreen extends Component {
 
@@ -15,7 +16,8 @@ class OtherPlaceScreen extends Component {
         this.state.scrollY.addListener(({value}) => console.log("ani: ", value))
     }
     componentDidMount(){
-        
+        //console.log()
+        const ref = firebase.firestore().collection('places').doc(this.props.navigation.getParam('place', null).id.toString());
         //this.props.navigation.setParams({headerHeight: this.state.scrollY,title: 'Titulo'})
     }
     static navigationOptions = {
@@ -25,6 +27,14 @@ class OtherPlaceScreen extends Component {
         this.props.navigation.goBack();
     }
     render() {
+        const data = [
+            {title: 'Title1', data: ['item1', 'item2']},
+            {title: 'Title2', data: ['item3', 'item4']},
+            {title: 'Title3', data: ['item5', 'item6']},
+            {title: 'Title4', data: ['item7', 'item8']},
+            {title: 'Title5', data: ['item9', 'item10']},
+            {title: 'Title6', data: ['item11', 'item12']},
+            ];
         const headerOffset = this.state.scrollY.interpolate({
             inputRange: [0, 300],
             outputRange: [0, -115],
@@ -51,11 +61,9 @@ class OtherPlaceScreen extends Component {
         return (
             <View style={{flex:1}}>
                 <Animated.SectionList
-                style={{
-                    marginTop: 175,
-                    minHeight:700,
+                style={[styles.sectionList,{
                     transform: [{ translateY: listMargin }],
-                }}
+                }]}
                 scrollEventThrottle={1}
                 onScroll={
                     Animated.event(
@@ -74,52 +82,21 @@ class OtherPlaceScreen extends Component {
                 renderSectionHeader={({section: {title}}) => (
                     <Text style={{fontWeight: 'bold', marginVertical: 10}}>{title}</Text>
                 )}
-                sections={[
-                    {title: 'Title1', data: ['item1', 'item2']},
-                    {title: 'Title2', data: ['item3', 'item4']},
-                    {title: 'Title3', data: ['item5', 'item6']},
-                    {title: 'Title4', data: ['item7', 'item8']},
-                    {title: 'Title5', data: ['item9', 'item10']},
-                    {title: 'Title6', data: ['item11', 'item12']},
-                    ]}
+                sections={data}
                 keyExtractor={(item, index) => item + index}
                 >
                 </Animated.SectionList>
-                <Animated.View style={{
-                    height: 175+28,
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    top: 0,
-                    right: 0,
+                <Animated.View style={[
+                    styles.headerContainer,{
                     transform: [{ translateY: headerOffset }],
-                    backgroundColor: 'transparent'
-                }}>
-                    <View style={{
-                        backgroundColor: appColors.secondary,
-                        flex:1,
-                        marginBottom: 28
-                    }}>
-                        <Text style={{
-                            color: "#fff",
-                            left: 0,
-                            right: 0,
-                            bottom: 15,
-                            paddingHorizontal: 45,
-                            position: 'absolute',
-                            fontSize: 20,
-                        }}>{place.name}</Text>
+                }]}>
+                    <View style={styles.headerVisible}>
+                        <Text style={styles.headerTitle}>{place.name}</Text>
                     </View>
                     <AnimatedActionButton 
                         buttonColor={appColors.primary} 
                         hideShadow={false} 
-                        style={{
-                            elevation:3, 
-                            bottom: 0,
-                            position: 'absolute',
-                            //opacity: fabScale,
-                            //transform:[{scale: fabScale}]
-                        }}
+                        style={styles.actionButton}
                         degrees={0}
                         offsetX={30}
                         offsetY={0}
@@ -127,16 +104,66 @@ class OtherPlaceScreen extends Component {
                         <Icon type="MaterialIcons" name="add" style={{fontSize: 20,height: 22,color: 'white',}} />
                     </AnimatedActionButton>
                 </Animated.View>
-                    <View style={{position:'absolute', top: 8, left: 5, borderRadius: 10,zIndex: 1}}>
-                <TouchableNativeFeedback onPress={()=> this.goBack()} background={TouchableNativeFeedback.Ripple('ThemeAttrAndroid', true)}>
-                    <View style={{padding: 8}}>
-                        <Icon type="MaterialIcons" name="arrow-back" style={{fontSize: 25,height: 22,color: 'white'}} />
-                    </View>
-                </TouchableNativeFeedback>
-                    </View>
+                <View style={styles.backButtonContainer}>
+                    <TouchableNativeFeedback onPress={()=> this.goBack()} background={TouchableNativeFeedback.Ripple('ThemeAttrAndroid', true)}>
+                        <View style={{padding: 8}}>
+                            <Icon type="MaterialIcons" name="arrow-back" style={styles.navIcon} />
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
             </View>
         );
     }
 }
 
 export default OtherPlaceScreen;
+
+const styles = StyleSheet.create({
+    sectionList:{
+        marginTop: 175,
+        minHeight:700,
+    },
+    //add static values on height
+    headerContainer:{
+        height: 175+28,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        top: 0,
+        right: 0,
+        backgroundColor: 'transparent'
+    },
+    headerVisible:{
+        backgroundColor: appColors.secondary,
+        flex:1,
+        marginBottom: 28
+    },
+    headerTitle:{
+        color: "#fff",
+        left: 0,
+        right: 0,
+        bottom: 15,
+        paddingHorizontal: 45,
+        position: 'absolute',
+        fontSize: 20,
+    },
+    actionButton:{
+        elevation:3, 
+        bottom: 0,
+        position: 'absolute',
+        //opacity: fabScale,
+        //transform:[{scale: fabScale}]
+    },
+    backButtonContainer:{
+        position:'absolute', 
+        top: 8, 
+        left: 5, 
+        borderRadius: 10,
+        zIndex: 1
+    },
+    navIcon:{
+        fontSize: 25,
+        height: 22,
+        color: 'white'
+    }
+});
