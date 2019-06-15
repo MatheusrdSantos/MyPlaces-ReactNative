@@ -15,16 +15,42 @@ export default StyleSheet.create({
     },
     statusBar:{
         width: 10,
-        backgroundColor: 'green'
     },
     name: {
-        fontSize: 20,
+        fontSize: 16,
     },
     description:{
         fontSize: 12
     },
     status:{
-        fontSize: 12,
+        fontSize: 12
+    },
+    timeContainer:{
+        paddingTop: 20,
+        paddingRight: 10
+    },
+    time: {
+        fontSize: 12
+    },
+    date:{
+        fontSize: 12
+    },
+    textCancelled:{
+        color: 'red'
+    },
+    textConfirmed:{
         color: 'green'
+    },
+    textPendding:{
+        color: '#e8cb4a'
+    },
+    barCancelled:{
+        backgroundColor: 'red'
+    },
+    barConfirmed:{
+        backgroundColor: 'green'
+    },
+    barPendding:{
+        backgroundColor: '#e8cb4a'
     }
 });

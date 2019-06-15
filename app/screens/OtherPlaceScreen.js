@@ -12,12 +12,25 @@ class OtherPlaceScreen extends Component {
         super()
         this.state = {
             scrollY: new Animated.Value(0),
+            schedules:[]
         };
         this.state.scrollY.addListener(({value}) => console.log("ani: ", value))
     }
     componentDidMount(){
-        //console.log()
-        const ref = firebase.firestore().collection('places').doc(this.props.navigation.getParam('place', null).id.toString());
+        const ref = firebase.firestore().collection('places').doc(this.props.navigation.getParam('place', null).id).collection('schedules');
+        ref.get().then(snapshot => {
+            snapshot.forEach(doc => {
+                console.log(doc.id, '=>', doc.data());
+                let refUser = firebase.firestore().collection('users').doc(doc.data().user.id);
+                refUser.get().then(docUser => {
+                    console.log(docUser.data())
+                    this.setState({schedules: [...this.state.schedules,{...doc.data(), id:doc.id, user:{...docUser.data(), id: docUser.id} }]});
+                }).catch(err => console.log(err));
+            });
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
         //this.props.navigation.setParams({headerHeight: this.state.scrollY,title: 'Titulo'})
     }
     static navigationOptions = {
@@ -26,6 +39,7 @@ class OtherPlaceScreen extends Component {
     goBack = () => {
         this.props.navigation.goBack();
     }
+
     render() {
         const data = [
             {title: 'Title1', data: ['item1', 'item2']},
@@ -61,31 +75,31 @@ class OtherPlaceScreen extends Component {
         return (
             <View style={{flex:1}}>
                 <Animated.SectionList
-                style={[styles.sectionList,{
-                    transform: [{ translateY: listMargin }],
-                }]}
-                scrollEventThrottle={1}
-                onScroll={
-                    Animated.event(
-                        [
-                            { nativeEvent: 
-                                { contentOffset: { y: this.state.scrollY } } 
-                            }
-                        ],
-                        { useNativeDriver: true },
-                        /* {
-                            listener: event => {
-                                console.log(event.nativeEvent.contentOffset)
-                        }} */
+                    style={[styles.sectionList,{
+                        transform: [{ translateY: listMargin }],
+                    }]}
+                    scrollEventThrottle={1}
+                    onScroll={
+                        Animated.event(
+                            [
+                                { nativeEvent: 
+                                    { contentOffset: { y: this.state.scrollY } } 
+                                }
+                            ],
+                            { useNativeDriver: true },
+                            /* {
+                                listener: event => {
+                                    console.log(event.nativeEvent.contentOffset)
+                            }} */
+                        )}
+                    renderItem={({item, index, section}) => <ScheduleCard key={item.id} schedule={item}></ScheduleCard>}
+                    renderSectionHeader={({section: {title}}) => (
+                        <Text style={{fontWeight: 'bold', marginVertical: 10, marginLeft: 20}}>{title}</Text>
                     )}
-                renderItem={({item, index, section}) => <ScheduleCard key={index} item={item}></ScheduleCard>}
-                renderSectionHeader={({section: {title}}) => (
-                    <Text style={{fontWeight: 'bold', marginVertical: 10}}>{title}</Text>
-                )}
-                sections={data}
-                keyExtractor={(item, index) => item + index}
-                >
-                </Animated.SectionList>
+                    sections={[{title:'Esta semana', data:this.state.schedules}]}
+                    keyExtractor={(item, index) => item.id}
+                    >
+                    </Animated.SectionList>
                 <Animated.View style={[
                     styles.headerContainer,{
                     transform: [{ translateY: headerOffset }],
