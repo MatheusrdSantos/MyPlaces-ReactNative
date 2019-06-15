@@ -40,6 +40,16 @@ class ScheduleCard extends Component {
             );
         }
     }
+    parseDate = () =>{
+        const date = new Date(this.props.schedule.time.seconds*1000);
+        console.log(this.props.schedule.time);
+        return ` ${date.getDate()}/${date.getMonth()}`;
+    } 
+    parseTime = () =>{
+        const date = new Date(this.props.schedule.time.seconds*1000);
+        console.log(this.props.schedule.time);
+        return ` ${date.getHours()}:${date.getMinutes()}`;
+    } 
     render() {
         return (
             <Card style={styles.card}>
@@ -49,8 +59,8 @@ class ScheduleCard extends Component {
                     {this.displayStatusText()}
                 </View>
                 <View style={styles.timeContainer}>
-                    <Text style={styles.date}><Icon style={styles.date} type="FontAwesome" name="calendar"></Icon> 15/06</Text>
-                    <Text style={styles.time}><Icon style={styles.time} type="MaterialIcons" name="access-time"></Icon> 20:20</Text>
+                    <Text style={styles.date}><Icon style={styles.date} type="FontAwesome" name="calendar"></Icon>{ this.parseDate() }</Text>
+                    <Text style={styles.time}><Icon style={styles.time} type="MaterialIcons" name="access-time"></Icon> { this.parseTime() }</Text>
                 </View>
                 {this.displayStatusBar()}
             </Card>
