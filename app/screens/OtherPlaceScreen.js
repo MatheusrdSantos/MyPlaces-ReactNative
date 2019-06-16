@@ -21,11 +21,10 @@ class OtherPlaceScreen extends Component {
         ref.get().then(snapshot => {
             snapshot.forEach(doc => {
                 console.log(doc.id, '=>', doc.data());
-                let refUser = firebase.firestore().collection('users').doc(doc.data().user.id);
-                refUser.get().then(docUser => {
-                    console.log(docUser.data())
-                    this.setState({schedules: [...this.state.schedules,{...doc.data(), id:doc.id, user:{...docUser.data(), id: docUser.id} }]});
-                }).catch(err => console.log(err));
+                //let refUser = firebase.firestore().collection('users').doc(doc.data().user.id);
+                //refUser.get().then(docUser => {
+                this.setState({schedules: [...this.state.schedules,{...doc.data(), id:doc.id}]});
+                //}).catch(err => console.log(err));
             });
         })
         .catch(err => {

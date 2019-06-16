@@ -54,7 +54,7 @@ class ScheduleCard extends Component {
         return (
             <Card style={styles.card}>
                 <View style={styles.infoContainer}>
-                    <Text style={styles.name}>{`${this.props.schedule.user.name} ${this.props.schedule.user.lastname}`}</Text>
+                    <Text style={styles.name}>{this.props.schedule.username}</Text>
                     <Text style={styles.description}>{this.props.schedule.description}</Text>
                     {this.displayStatusText()}
                 </View>
