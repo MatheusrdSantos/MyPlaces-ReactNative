@@ -7,7 +7,9 @@ import RestaurantsScreen from './RestaurantsScreen';
 import OthersScreen from './OthersScreen';
 import OtherPlaceScreen from './OtherPlaceScreen';
 import PlaceScreen from './PlaceScreen';
+import ScheduleScreenModal from './ScheduleScreenModal';
 import {appColors} from '../resources/colors';
+
 
 const PlacesTabNav = createMaterialTopTabNavigator({
     SuperMarket: {
@@ -58,10 +60,11 @@ const AppStack = createStackNavigator(
     {
         Home: HomeScreen,
         Places: PlacesTabNav,
+        //OtherPlace: OtherPlaceStack,
         OtherPlace: OtherPlaceScreen,
         //Place: PlaceScreen
     },{
-        initialRouteName: 'Home'
+        initialRouteName: 'Home',
     }
 
 );
@@ -76,7 +79,7 @@ const switchNav = createSwitchNavigator({
         auth: AuthStack,
         signIn: SignInScreen,
     },{
-        initialRouteName: 'signIn'
+        initialRouteName: 'signIn',
     }
 );
 

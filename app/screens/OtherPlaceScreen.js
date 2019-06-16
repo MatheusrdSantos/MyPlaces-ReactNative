@@ -113,7 +113,10 @@ class OtherPlaceScreen extends Component {
                         degrees={0}
                         offsetX={30}
                         offsetY={0}
-                        fixNativeFeedbackRadius={true}>
+                        fixNativeFeedbackRadius={true}
+                        onPress={() => {
+                            this.props.navigation.navigate('newSchedule');
+                        }}>
                         <Icon type="MaterialIcons" name="add" style={{fontSize: 20,height: 22,color: 'white',}} />
                     </AnimatedActionButton>
                 </Animated.View>
