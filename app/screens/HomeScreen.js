@@ -6,6 +6,7 @@ import {appColors, menuColors} from '../resources/colors';
 import {GoogleSignin} from 'react-native-google-signin';
 import HomeMenuItem from '../components/HomeMenuItem';
 import {Icon} from 'native-base';
+import firebase from 'react-native-firebase';
 class HomeScreen extends Component{
     static navigationOptions = {
         title: 'Home',
@@ -19,9 +20,14 @@ class HomeScreen extends Component{
     };
     signOut = async () => {
         try {
-            await GoogleSignin.configure();  
+            /* await GoogleSignin.configure();  
             await GoogleSignin.revokeAccess();
-            await GoogleSignin.signOut();
+            await GoogleSignin.signOut(); */
+            firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+            }).catch(function(error) {
+                console.log(error)
+            });
         } catch (error) {
             console.error(error);
         }

@@ -135,7 +135,8 @@ export default OtherPlaceScreen;
 const styles = StyleSheet.create({
     sectionList:{
         marginTop: 175,
-        minHeight:700,
+        /* backgroundColor: 'yellow', */
+        /* minHeight:700, */
     },
     //add static values on height
     headerContainer:{
