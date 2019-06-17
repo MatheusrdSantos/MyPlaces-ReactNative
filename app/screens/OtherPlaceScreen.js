@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, TouchableNativeFeedback, StyleSheet} from 'react-native';
+import { View, Text, Animated, TouchableNativeFeedback, StyleSheet, Dimensions} from 'react-native';
 import {appColors} from '../resources/colors';
 import ActionButton from 'react-native-action-button';
 import {Icon} from 'native-base';
@@ -49,15 +49,15 @@ class OtherPlaceScreen extends Component {
             {title: 'Title6', data: ['item11', 'item12']},
             ];
         const headerOffset = this.state.scrollY.interpolate({
-            inputRange: [0, 300],
+            inputRange: [0, 150],
             outputRange: [0, -115],
             extrapolate: 'clamp',
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp'
         })
         const listMargin = this.state.scrollY.interpolate({
-            inputRange: [0, 300],
-            outputRange: [0, -175-28],
+            inputRange: [0, 150],
+            outputRange: [0, -115],
             extrapolate: 'clamp',
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp'
@@ -137,6 +137,7 @@ export default OtherPlaceScreen;
 const styles = StyleSheet.create({
     sectionList:{
         marginTop: 175,
+        //height: 'auto'
         /* backgroundColor: 'yellow', */
         /* minHeight:700, */
     },
