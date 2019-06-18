@@ -64,6 +64,13 @@ class OtherPlaceScreen extends Component {
             outputRange: [1, 0]
         });
         
+        const fabScale = this.scrollY.interpolate({
+            inputRange: [maxScroolableHeight/2, maxScroolableHeight],
+            outputRange: [1, 0],
+            extrapolate: 'clamp',
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp'
+        });
 
         const data = [
             {title: 'Title1', data: ['item1', 'item2']},
@@ -102,8 +109,15 @@ class OtherPlaceScreen extends Component {
                             style={{ height: toolBarHeight}}
                         />
                             {/* <View style={{elevation: 5, }}> */}
-                            <View
-                                style={[styles.actionButton, {marginTop: -28, alignSelf: 'flex-end', marginRight: 30}]}
+                            <Animated.View
+                                style={
+                                    [
+                                        styles.actionButton, 
+                                        {marginTop: -28, alignSelf: 'flex-end', marginRight: 30, 
+                                        transform: [
+                                            {scale: fabScale},
+                                        ]},
+                                    ]}
                                 >
                                 <TouchableNativeFeedback
                                     onPress={() => {
@@ -115,7 +129,7 @@ class OtherPlaceScreen extends Component {
                                     >
                                         <Icon type="MaterialIcons" name="add" style={{fontSize: 20,height: 22,color: 'white',}} />
                                 </TouchableNativeFeedback>
-                                    </View>
+                            </Animated.View>
 
                             {/* </View> */}
                             
