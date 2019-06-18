@@ -63,6 +63,7 @@ class OtherPlaceScreen extends Component {
             inputRange: [maxScroolableHeight - 0.1, maxScroolableHeight],
             outputRange: [1, 0]
         });
+        
 
         const data = [
             {title: 'Title1', data: ['item1', 'item2']},
@@ -74,7 +75,6 @@ class OtherPlaceScreen extends Component {
             ];
         return (
             <View style={styles.container}>
-                <View style={styles.container}>
                 <Animated.ScrollView
                     scrollEventThrottle={1}
                     onScroll={Animated.event(
@@ -97,10 +97,29 @@ class OtherPlaceScreen extends Component {
                     />
 
                     <Animated.View style={{ opacity: toolBarOpacity }}>
-                            <Image
-                                source={{ uri: 'https://lh3.googleusercontent.com/-1m6XMEVnSPU/XDED_5V1QBI/AAAAAAAAAsg/N7HUB8rbjtM9Fy48qdhzRzJBE1FZq7ClwCEwYBhgL/' }}
-                                style={{ height: toolBarHeight }}
-                            />
+                        <Image
+                            source={{ uri: 'https://lh3.googleusercontent.com/-1m6XMEVnSPU/XDED_5V1QBI/AAAAAAAAAsg/N7HUB8rbjtM9Fy48qdhzRzJBE1FZq7ClwCEwYBhgL/' }}
+                            style={{ height: toolBarHeight}}
+                        />
+                            {/* <View style={{elevation: 5, }}> */}
+                            <View
+                                style={[styles.actionButton, {marginTop: -28, alignSelf: 'flex-end', marginRight: 30}]}
+                                >
+                                <TouchableNativeFeedback
+                                    onPress={() => {
+                                        //this.props.navigation.navigate('newSchedule');
+                                        alert('clicked')
+                                    }}
+                                    /* background={TouchableNativeFeedback.Ripple('ThemeAttrAndroid', true)} */
+                                    
+                                    >
+                                        <Icon type="MaterialIcons" name="add" style={{fontSize: 20,height: 22,color: 'white',}} />
+                                </TouchableNativeFeedback>
+                                    </View>
+
+                            {/* </View> */}
+                            
+
                     </Animated.View>
                     <SectionList
                         renderItem={({item, index, section}) => <ScheduleCard key={item.id} schedule={item}></ScheduleCard>}
@@ -123,7 +142,7 @@ class OtherPlaceScreen extends Component {
                         }
                     ]}
                 >
-
+                    
                 </Animated.View>
 
                 <Animated.View
@@ -137,23 +156,22 @@ class OtherPlaceScreen extends Component {
                     ]}
                 >
                 </Animated.View>
-                </View>
                 
 
-                <View style={styles.fabContainer}>
-                    <TouchableNativeFeedback
+                {/* <View style={styles.fabContainer}> */}
+                    {/* <TouchableNativeFeedback
                         onPress={() => {
                             this.props.navigation.navigate('newSchedule');
                         }}
                         background={TouchableNativeFeedback.Ripple('ThemeAttrAndroid', true)}
                         >
                         <View
-                            style={styles.actionButton}
+                            style={[styles.actionButton, styles.fabContainer]}
                         >
                             <Icon type="MaterialIcons" name="add" style={{fontSize: 20,height: 22,color: 'white',}} />
                         </View>
-                    </TouchableNativeFeedback>
-                </View>
+                    </TouchableNativeFeedback> */}
+                {/* </View> */}
                 
             </View>
         );
@@ -164,7 +182,7 @@ export default OtherPlaceScreen;
 
 const styles = StyleSheet.create({
     container:{
-        flex:1
+        flex:1,
     },
     toolBarOverlay: {
         position: 'absolute',
@@ -204,12 +222,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: appColors.secondary,
-        borderRadius: 28
+        borderRadius: 28,
+        elevation: 5
     },
     fabContainer:{
         position: 'absolute',
         // toobar height
-        top: 250 - 28,
+        bottom: 0,
         right: 30,
+        left: 0,
     }
 });
