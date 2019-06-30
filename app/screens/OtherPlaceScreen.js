@@ -65,7 +65,7 @@ class OtherPlaceScreen extends Component {
         });
         
         const fabScale = this.scrollY.interpolate({
-            inputRange: [maxScroolableHeight/2, maxScroolableHeight],
+            inputRange: [maxScroolableHeight/2, (maxScroolableHeight/2)+15],
             outputRange: [1, 0],
             extrapolate: 'clamp',
             extrapolateLeft: 'clamp',
@@ -104,11 +104,12 @@ class OtherPlaceScreen extends Component {
                     />
 
                     <Animated.View style={{ opacity: toolBarOpacity }}>
-                        <Image
+                        {/* <Image
                             source={{ uri: 'https://lh3.googleusercontent.com/-1m6XMEVnSPU/XDED_5V1QBI/AAAAAAAAAsg/N7HUB8rbjtM9Fy48qdhzRzJBE1FZq7ClwCEwYBhgL/' }}
                             style={{ height: toolBarHeight}}
-                        />
-                            {/* <View style={{elevation: 5, }}> */}
+                        /> */}
+                        <View style={{elevation: 5, height: toolBarHeight, backgroundColor: appColors.primary}}>
+                        </View>
                             <Animated.View
                                 style={
                                     [
@@ -131,7 +132,6 @@ class OtherPlaceScreen extends Component {
                                 </TouchableNativeFeedback>
                             </Animated.View>
 
-                            {/* </View> */}
                             
 
                     </Animated.View>
@@ -202,7 +202,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: 0,
-        right: 0
+        right: 0,
+        elevation: 5
     },
     navBarContainer: {
         position: 'absolute',
