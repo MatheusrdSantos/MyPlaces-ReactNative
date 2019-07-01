@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Animated, Dimensions} from 'react-native';
+import {Animated, Dimensions, TouchableOpacity} from 'react-native';
+import {Icon} from 'native-base';
 import {connect} from 'react-redux';
 
 const screenHeight = Dimensions.get("window").height
@@ -29,22 +30,24 @@ class ScheduleModal extends Component {
         }
     }
 
-    /* openModal = () => {
-        Animated.spring(this.state.top, {
-            toValue: 174
-        }).start()
-    }
-
     closeModal = () => {
         Animated.spring(this.state.top, {
             toValue: screenHeight
         }).start()
-    } */
+    }
     
     render() {
         return (
-            <AnimatedContainer style={{top: this.state.top}}>
+            <AnimatedContainer style={{ top: this.state.top }}>
                 <Header />
+                <TouchableOpacity
+                    onPress={this.closeModal}
+                    style={{ position: "absolute", top: 120, left: "50%", marginLeft: -22, zIndex: 1 }}
+                >
+                    <CloseView style={{ elevation: 10 }}>
+                        <Icon type="MaterialCommunityIcons" name='close' size={44} color='blue' />
+                    </CloseView>
+                </TouchableOpacity>
                 <Body />
             </AnimatedContainer>
         )
@@ -68,6 +71,16 @@ const Header = styled.View`
 const Body = styled.View`
     background: #eaeaea;
     height: 900px;
+`
+
+const CloseView = styled.View`
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+    background: white;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 `
 const mapStateToProps = (state) => {
     return {
