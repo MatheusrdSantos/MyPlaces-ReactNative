@@ -4,6 +4,9 @@ import {appColors} from '../resources/colors';
 import ActionButton from 'react-native-action-button';
 import {Icon} from 'native-base';
 import ScheduleCard from '../components/ScheduleCard';
+import ScheduleModal from '../components/ScheduleModal';
+import {toggleScheduleModal} from '../actions';
+import {connect} from 'react-redux';
 import firebase from 'react-native-firebase';
 const AnimatedActionButton =  Animated.createAnimatedComponent(ActionButton);
 class OtherPlaceScreen extends Component {
@@ -82,6 +85,7 @@ class OtherPlaceScreen extends Component {
             ];
         return (
             <View style={styles.container}>
+                <ScheduleModal></ScheduleModal>
                 <Animated.ScrollView
                     scrollEventThrottle={1}
                     onScroll={Animated.event(
@@ -123,7 +127,7 @@ class OtherPlaceScreen extends Component {
                                 <TouchableNativeFeedback
                                     onPress={() => {
                                         //this.props.navigation.navigate('newSchedule');
-                                        alert('clicked')
+                                        this.props.toggleModal();
                                     }}
                                     /* background={TouchableNativeFeedback.Ripple('ThemeAttrAndroid', true)} */
                                     
@@ -192,7 +196,17 @@ class OtherPlaceScreen extends Component {
     }
 }
 
-export default OtherPlaceScreen;
+const mapStateToProps = (state) => {
+    return {}
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        toggleModal: () => dispatch(toggleScheduleModal())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OtherPlaceScreen);
 
 const styles = StyleSheet.create({
     container:{
