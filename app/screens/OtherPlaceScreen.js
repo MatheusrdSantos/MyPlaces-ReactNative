@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, TouchableNativeFeedback, StyleSheet, Dimensions, Image, SectionList, Platform, StatusBar, Easing} from 'react-native';
+import { View, Text, Animated, TouchableNativeFeedback, StyleSheet, Dimensions, Image, SectionList, Platform, Easing} from 'react-native';
 import {appColors} from '../resources/colors';
 import ActionButton from 'react-native-action-button';
 import {Icon} from 'native-base';
@@ -22,13 +22,6 @@ class OtherPlaceScreen extends Component {
         this.scrollY.addListener(({value}) => console.log("ani: ", value))
     }
     componentDidMount(){
-
-        StatusBar.setBarStyle("dark-content", true)
-
-        if (Platform.OS == "android") {
-            StatusBar.setBarStyle("light-content", true)
-        }
-
         const ref = firebase.firestore().collection('places').doc(this.props.navigation.getParam('place', null).id).collection('schedules');
         ref.get().then(snapshot => {
             snapshot.forEach(doc => {
@@ -59,8 +52,6 @@ class OtherPlaceScreen extends Component {
             Animated.spring(this.state.opacity, {
                 toValue: 0.5
             }).start()
-
-            StatusBar.setBarStyle("light-content", true)
         }
 
         if (!this.props.modalState) {
@@ -72,7 +63,6 @@ class OtherPlaceScreen extends Component {
             Animated.spring(this.state.opacity, {
                 toValue: 1
             }).start()
-            StatusBar.setBarStyle("dark-content", true)
         }
     }
     static navigationOptions = {
@@ -172,8 +162,6 @@ class OtherPlaceScreen extends Component {
                                             Animated.spring(this.state.opacity, {
                                                 toValue: 0.5
                                             }).start()
-                                
-                                            StatusBar.setBarStyle("light-content", true)
                                         }
                                 
                                         if (this.props.modalState) {
@@ -185,8 +173,6 @@ class OtherPlaceScreen extends Component {
                                             Animated.spring(this.state.opacity, {
                                                 toValue: 1
                                             }).start()
-                                
-                                            StatusBar.setBarStyle("dark-content", true)
                                         }
                                     }}
                                     /* background={TouchableNativeFeedback.Ripple('ThemeAttrAndroid', true)} */
