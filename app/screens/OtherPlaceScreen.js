@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, TouchableNativeFeedback, StyleSheet, Dimensions, Image, SectionList, Platform} from 'react-native';
+import { View, Text, Animated, TouchableNativeFeedback, StyleSheet, Dimensions, Image, SectionList, Platform, StatusBar, Easing} from 'react-native';
 import {appColors} from '../resources/colors';
 import ActionButton from 'react-native-action-button';
 import {Icon} from 'native-base';
@@ -14,12 +14,21 @@ class OtherPlaceScreen extends Component {
     constructor(props){
         super(props)
         this.state = {
-            schedules:[]
+            schedules:[],
+            scale: new Animated.Value(1),
+            opacity: new Animated.Value(1)
         };
         this.scrollY = new Animated.Value(0);
         this.scrollY.addListener(({value}) => console.log("ani: ", value))
     }
     componentDidMount(){
+
+        StatusBar.setBarStyle("dark-content", true)
+
+        if (Platform.OS == "android") {
+            StatusBar.setBarStyle("light-content", true)
+        }
+
         const ref = firebase.firestore().collection('places').doc(this.props.navigation.getParam('place', null).id).collection('schedules');
         ref.get().then(snapshot => {
             snapshot.forEach(doc => {
@@ -34,6 +43,37 @@ class OtherPlaceScreen extends Component {
             console.log('Error getting documents', err);
         });
         //this.props.navigation.setParams({headerHeight: this.state.scrollY,title: 'Titulo'})
+    }
+
+    componentDidUpdate() {
+        this.toggleScreen()
+    }
+
+    toggleScreen = () => {
+        if (this.props.modalState) {
+            Animated.timing(this.state.scale, {
+                toValue: 0.9,
+                duration: 300,
+                easing: Easing.in()
+            }).start()
+            Animated.spring(this.state.opacity, {
+                toValue: 0.5
+            }).start()
+
+            StatusBar.setBarStyle("light-content", true)
+        }
+
+        if (!this.props.modalState) {
+            Animated.timing(this.state.scale, {
+                toValue: 1,
+                duration: 300,
+                easing: Easing.in()
+            }).start()
+            Animated.spring(this.state.opacity, {
+                toValue: 1
+            }).start()
+            StatusBar.setBarStyle("dark-content", true)
+        }
     }
     static navigationOptions = {
         header: null,
@@ -74,17 +114,9 @@ class OtherPlaceScreen extends Component {
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp'
         });
-
-        const data = [
-            {title: 'Title1', data: ['item1', 'item2']},
-            {title: 'Title2', data: ['item3', 'item4']},
-            {title: 'Title3', data: ['item5', 'item6']},
-            {title: 'Title4', data: ['item7', 'item8']},
-            {title: 'Title5', data: ['item9', 'item10']},
-            {title: 'Title6', data: ['item11', 'item12']},
-            ];
         return (
-            <View style={styles.container}>
+            <Animated.View 
+                style={styles.container}>
                 <ScheduleModal></ScheduleModal>
                 <Animated.ScrollView
                     scrollEventThrottle={1}
@@ -95,6 +127,9 @@ class OtherPlaceScreen extends Component {
                             /* listener: onContentScroll */
                         }
                     )}
+                    style={
+                        { transform: [{ scale: this.state.scale }], opacity: this.state.opacity }
+                    }
                 >
                     <Animated.View
                         style={[
@@ -128,6 +163,31 @@ class OtherPlaceScreen extends Component {
                                     onPress={() => {
                                         //this.props.navigation.navigate('newSchedule');
                                         this.props.toggleModal();
+                                        if (!this.props.modalState) {
+                                            Animated.timing(this.state.scale, {
+                                                toValue: 0.9,
+                                                duration: 300,
+                                                easing: Easing.in()
+                                            }).start()
+                                            Animated.spring(this.state.opacity, {
+                                                toValue: 0.5
+                                            }).start()
+                                
+                                            StatusBar.setBarStyle("light-content", true)
+                                        }
+                                
+                                        if (this.props.modalState) {
+                                            Animated.timing(this.state.scale, {
+                                                toValue: 1,
+                                                duration: 300,
+                                                easing: Easing.in()
+                                            }).start()
+                                            Animated.spring(this.state.opacity, {
+                                                toValue: 1
+                                            }).start()
+                                
+                                            StatusBar.setBarStyle("dark-content", true)
+                                        }
                                     }}
                                     /* background={TouchableNativeFeedback.Ripple('ThemeAttrAndroid', true)} */
                                     
@@ -191,13 +251,15 @@ class OtherPlaceScreen extends Component {
                     </TouchableNativeFeedback> */}
                 {/* </View> */}
                 
-            </View>
+            </Animated.View>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        modalState: state.app.places.others.modals.scheduleModal
+    }
 }
 
 const mapDispatchToProps = (dispatch) =>{

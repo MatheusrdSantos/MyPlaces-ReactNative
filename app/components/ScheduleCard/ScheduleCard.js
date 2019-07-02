@@ -42,12 +42,12 @@ class ScheduleCard extends Component {
     }
     parseDate = () =>{
         const date = new Date(this.props.schedule.time.seconds*1000);
-        console.log(this.props.schedule.time);
+        //console.log(this.props.schedule.time);
         return ` ${date.getDate()}/${date.getMonth()}`;
     } 
     parseTime = () =>{
         const date = new Date(this.props.schedule.time.seconds*1000);
-        console.log(this.props.schedule.time);
+        //console.log(this.props.schedule.time);
         return ` ${date.getHours()}:${date.getMinutes()}`;
     } 
     render() {
