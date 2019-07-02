@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Animated, Dimensions, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
-import {Icon} from 'native-base';
+import {Animated, Dimensions, TouchableOpacity, DatePickerAndroid} from 'react-native';
+import {Icon, DatePicker} from 'native-base';
 import {connect} from 'react-redux';
 import {toggleScheduleModal} from '../../actions';
 import { appColors } from '../../resources/colors';
@@ -11,6 +11,7 @@ const screenHeight = Dimensions.get("window").height
 class ScheduleModal extends Component {
     state = {
         top: new Animated.Value(screenHeight),
+        chosenDate: new Date()
     }
     componentDidMount() {
         this.toggleModal(); 
@@ -38,7 +39,9 @@ class ScheduleModal extends Component {
             toValue: screenHeight
         }).start()
     }
-    
+    setDate = (newDate) => {
+        this.setState({ chosenDate: newDate });
+    }
     render() {
         return (
             <AnimatedContainer style={{ top: this.state.top }}>
@@ -62,7 +65,21 @@ class ScheduleModal extends Component {
                     </ConfirmView>
                 </TouchableOpacity>
                 <Body>
-
+                <DatePicker
+                    defaultDate={new Date()}
+                    minimumDate={new Date()}
+                    /* maximumDate={new Date(2018, 12, 31)} */
+                    locale={"br"}
+                    timeZoneOffsetInMinutes={undefined}
+                    modalTransparent={false}
+                    animationType={"fade"}
+                    androidMode={"default"}
+                    placeHolderText="Selecione uma data"
+                    textStyle={{ color: appColors.secondary }}
+                    placeHolderTextStyle={{ color: appColors.secondary }}
+                    onDateChange={this.setDate}
+                    disabled={false}
+                />
                 </Body>
             </AnimatedContainer>
         )
@@ -79,7 +96,7 @@ const Container = styled.View`
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const Header = styled.View`
-    background: #333;
+    background: ${appColors.primary};
     height: 100px;
     text-align: center;
 `
@@ -92,6 +109,7 @@ const Title = styled.Text`
 const Body = styled.View`
     background: #eaeaea;
     height: 1000px;
+    align-items: center;
 `
 
 const CloseView = styled.View`
