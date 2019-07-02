@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Animated, Dimensions, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import {connect} from 'react-redux';
+import {toggleScheduleModal} from '../../actions';
 
 const screenHeight = Dimensions.get("window").height
 
@@ -31,6 +32,7 @@ class ScheduleModal extends Component {
     }
 
     closeModal = () => {
+        this.props.toggleModalState();
         Animated.spring(this.state.top, {
             toValue: screenHeight
         }).start()
@@ -89,7 +91,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        toggleModalState: () => dispatch(toggleScheduleModal())
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleModal)
