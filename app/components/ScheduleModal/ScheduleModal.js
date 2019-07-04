@@ -188,6 +188,7 @@ const DateContainer = styled.View`
     margin-top: 30px;
     text-align: center;
     align-items: center;
+    justify-content: center;
 `
 const Label = styled.Text`
     color: #000;
