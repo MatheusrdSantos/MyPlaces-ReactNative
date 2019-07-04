@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Animated, Dimensions, TouchableOpacity, DatePickerAndroid} from 'react-native';
+import {Animated, Dimensions, TouchableOpacity, DatePickerAndroid, TimePickerAndroid} from 'react-native';
 import {Icon, DatePicker} from 'native-base';
 import {connect} from 'react-redux';
 import {toggleScheduleModal} from '../../actions';
@@ -11,7 +11,8 @@ const screenHeight = Dimensions.get("window").height
 class ScheduleModal extends Component {
     state = {
         top: new Animated.Value(screenHeight),
-        chosenDate: new Date()
+        chosenDateTime: new Date(),
+        dateTimeSelected: false,
     }
     componentDidMount() {
         this.toggleModal(); 
@@ -39,8 +40,62 @@ class ScheduleModal extends Component {
             toValue: screenHeight
         }).start()
     }
+
     setDate = (newDate) => {
         this.setState({ chosenDate: newDate });
+    }
+
+    getTime = () =>  {
+
+        TimePickerAndroid.open({
+            hour: new Date().getHours(),
+            minute: new Date().getMinutes(),
+            is24Hour: true, // Will display '2 PM'
+        }).then(res =>{
+            const {action, hour, minute} = res;
+            if (action !== TimePickerAndroid.dismissedAction) {
+                // Selected hour (0-23), minute (0-59)
+            }
+            this.state.chosenDateTime.setHours(hour);
+            this.state.chosenDateTime.setMinutes(minute);
+            this.setState({chosenDateTime: this.state.chosenDateTime, dateTimeSelected: true});
+        }).catch(err =>{
+            const {code, message} = err;
+            console.warn('Cannot open time picker', message);
+        });
+
+    }
+
+    getDate = () =>{
+        DatePickerAndroid.open({
+            date: new Date()
+        }).then(res => {
+            const {action, year, month, day} = res;
+            if (action !== DatePickerAndroid.dismissedAction) {
+            // Selected year, month (0-11), day
+            }
+            this.state.chosenDateTime.setFullYear(year, month, day);
+            this.getTime();
+
+        }).catch(err => {
+            const {code, message} = err;
+            console.warn('Cannot open date picker', message);
+        });
+    }
+
+    formatTime = () => {
+        return `${this.state.chosenDateTime.getHours()}:${this.state.chosenDateTime.getMinutes()}`;
+    }
+    formatDate = () =>{
+        return `${this.state.chosenDateTime.getDay()}/${this.state.chosenDateTime.getMonth()+1}/${this.state.chosenDateTime.getYear()}`;
+    }
+
+    displayDate = () => {
+        if(this.state.dateTimeSelected){
+            return `${this.formatDate()} às ${this.formatTime()}`;
+        }else{
+            return "Escolha um horário";
+        }
     }
     render() {
         return (
@@ -65,21 +120,11 @@ class ScheduleModal extends Component {
                     </ConfirmView>
                 </TouchableOpacity>
                 <Body>
-                <DatePicker
-                    defaultDate={new Date()}
-                    minimumDate={new Date()}
-                    /* maximumDate={new Date(2018, 12, 31)} */
-                    locale={"br"}
-                    timeZoneOffsetInMinutes={undefined}
-                    modalTransparent={false}
-                    animationType={"fade"}
-                    androidMode={"default"}
-                    placeHolderText="Selecione uma data"
-                    textStyle={{ color: appColors.secondary }}
-                    placeHolderTextStyle={{ color: appColors.secondary }}
-                    onDateChange={this.setDate}
-                    disabled={false}
-                />
+                    <DateContainer>
+                        <Label>Data do agendamento: </Label>
+                        <ScheduleTime onPress={() => this.getDate()}>{this.displayDate()}</ScheduleTime>
+                        <Label>Descrição: </Label>
+                    </DateContainer>
                 </Body>
             </AnimatedContainer>
         )
@@ -109,7 +154,7 @@ const Title = styled.Text`
 const Body = styled.View`
     background: #eaeaea;
     height: 1000px;
-    align-items: center;
+    align-items: stretch;
 `
 
 const CloseView = styled.View`
@@ -131,6 +176,28 @@ const ConfirmView = styled.View`
     align-items: center;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     background-color: ${appColors.secondary};
+`
+const ScheduleTime = styled.Text`
+    font-size: 16px;
+    margin-top: 10px;
+    color: #000;
+    text-align: center;
+`
+
+const DateContainer = styled.View`
+    margin-top: 30px;
+    text-align: center;
+    align-items: center;
+`
+const Label = styled.Text`
+    color: #000;
+    font-size: 20px;
+    border-bottom-color: #8b8b91;
+    border-bottom-width: 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align:center;
+    width: 70%;
 `
 const mapStateToProps = (state) => {
     return {
